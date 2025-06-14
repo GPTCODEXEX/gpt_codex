@@ -2,6 +2,10 @@
 
 This repository contains a simple shopping cart example. The original static implementation using plain HTML, CSS and JavaScript is kept for reference, while a modern React + Vite version lives in the `frontend` directory.
 
+The React project is configured with a `base` path so that it works when deployed
+to GitHub Pages at `/gpt_codex/`. Product images are loaded from Unsplash so no
+binary assets are stored in this repository.
+
 ## Running Locally (React)
 
 To start the React development server run:
