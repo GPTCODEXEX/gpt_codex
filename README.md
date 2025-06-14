@@ -23,3 +23,8 @@ python3 -m http.server
 ```
 
 Then navigate to `http://localhost:8000`.
+
+## Deploying to GitHub Pages
+
+This repository contains a GitHub Actions workflow that automatically builds the React app and publishes it to **GitHub Pages** whenever changes are pushed to the `main` branch. After merging your changes, enable Pages in the repository settings and select the `GitHub Actions` option to host the site.
+
