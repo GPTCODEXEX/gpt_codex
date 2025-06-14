@@ -1,23 +1,25 @@
 # Simple Shop Website
 
-This repository contains a minimal example of a shopping website built with static HTML, CSS and JavaScript. The site lets users view products and add them to a simple cart.
+This repository contains a simple shopping cart example. The original static implementation using plain HTML, CSS and JavaScript is kept for reference, while a modern React + Vite version lives in the `frontend` directory.
 
-## Running Locally
+## Running Locally (React)
 
-To preview the website on your machine, open `index.html` in a web browser or start a local server:
+To start the React development server run:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Open the URL printed in the terminal (usually <http://localhost:5173>) to view the shop.
+
+## Legacy Static Files
+
+If you prefer the old static version you can still open `index.html` directly or serve it with:
 
 ```bash
 python3 -m http.server
 ```
 
 Then navigate to `http://localhost:8000`.
-
-## Deploying to GitHub Pages
-
-To make the site publicly accessible:
-
-1. Create a new repository on GitHub and push this code.
-2. In the repository settings, enable **GitHub Pages** and choose the branch that contains these files (usually `main` or `master`).
-3. After a minute, GitHub will provide a URL like `https://<username>.github.io/<repository>` where the site is hosted.
-
-The generated link can be shared with others so they can access the site from any browser.
