@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>많이 자도 피곤할 때 — 근거 기반 체크</title>
+<meta name="description" content="많이 자고 일찍 자는데도 피곤할 때, 수면의 질·철결핍·갑상선·혈당·스트레스·약물·임신 가능성 등을 근거 기반으로 점검하는 모바일 체크도구" />
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--text:#15171c;--muted:#626a78;--line:#e7e9ef;--brand:#5b6cff;--brand2:#eef0ff;--danger:#b42318;--dangerbg:#fff1f0;--warn:#9a6700;--warnbg:#fff8e6;--ok:#027a48;--okbg:#ecfdf3;--shadow:0 8px 30px rgba(25,35,70,.08)}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#f4f6ff 0,#f7f8fb 180px);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;color:var(--text);line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 88px}.hero{padding:20px 4px 14px}.eyebrow{font-size:12px;font-weight:800;color:var(--brand);letter-spacing:.04em}.hero h1{font-size:27px;line-height:1.25;margin:7px 0 8px}.hero p{margin:0;color:var(--muted);font-size:14px}.badge{display:inline-flex;gap:6px;align-items:center;background:var(--brand2);color:#3945b8;border-radius:999px;padding:7px 10px;font-size:12px;font-weight:750;margin-top:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:var(--shadow);margin:12px 0}.notice{font-size:13px;color:var(--muted)}.notice strong{color:var(--text)}
+.progress{height:8px;background:#eceef4;border-radius:999px;overflow:hidden;margin:8px 0 4px}.bar{height:100%;width:0;background:linear-gradient(90deg,var(--brand),#8d5bff);transition:.25s}.stepmeta{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-bottom:16px}.qtitle{font-weight:850;font-size:19px;line-height:1.4;margin:4px 0 8px}.qhelp{font-size:13px;color:var(--muted);margin-bottom:14px}.opts{display:grid;gap:9px}.opt{width:100%;text-align:left;border:1.5px solid #dfe2ea;background:#fff;border-radius:14px;padding:13px 14px;font-size:15px;color:var(--text);cursor:pointer}.opt:hover{border-color:#b9c0ff}.opt.sel{border-color:var(--brand);background:var(--brand2);font-weight:750}.checkrow{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:13px;padding:12px;margin:8px 0;background:#fff}.checkrow input{width:20px;height:20px;margin-top:1px}.checkrow span{font-size:14px}
+.nav{display:flex;gap:9px;margin-top:16px}.btn{border:0;border-radius:13px;padding:13px 15px;font-size:15px;font-weight:800;cursor:pointer}.btn.primary{background:var(--brand);color:#fff;flex:1}.btn.ghost{background:#f0f1f5;color:#343944}.btn:disabled{opacity:.4}.hidden{display:none!important}
+.alert{border-radius:15px;padding:14px;margin:10px 0;font-size:14px}.alert.danger{background:var(--dangerbg);color:#7a271a;border:1px solid #fecdca}.alert.warn{background:var(--warnbg);color:#6b4e00;border:1px solid #f3d38a}.alert.ok{background:var(--okbg);color:#05603a;border:1px solid #abefc6}
+.resultHead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.resultHead h2{margin:0;font-size:23px}.pill{font-size:12px;font-weight:800;padding:6px 9px;border-radius:999px;background:#f1f3f7;color:#4b5260;white-space:nowrap}.domain{border-top:1px solid var(--line);padding:14px 0}.domain:first-of-type{border-top:0}.domainTop{display:flex;justify-content:space-between;gap:10px;align-items:center}.domain h3{margin:0;font-size:17px}.level{font-size:12px;font-weight:850;border-radius:999px;padding:5px 8px}.lv2{background:#fff0eb;color:#a33a16}.lv1{background:#fff8e6;color:#8a6100}.lv0{background:#eef8f3;color:#08724b}.why,.action{font-size:13px;color:#555e6d;margin:8px 0 0}.action{color:#242a35}.kicker{font-size:13px;font-weight:850;margin:18px 0 8px}.recommend{padding:12px 0;border-bottom:1px dashed var(--line)}.recommend:last-child{border-bottom:0}.recommend b{display:block;margin-bottom:3px}.small{font-size:12px;color:var(--muted)}
+.tabs{display:flex;gap:8px;overflow:auto;padding-bottom:4px}.tab{white-space:nowrap;border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 12px;font-weight:750;color:#555;cursor:pointer}.tab.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+.diarygrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.field{display:flex;flex-direction:column;gap:5px}.field label{font-size:12px;color:var(--muted);font-weight:700}.field input,.field select,.field textarea{width:100%;border:1px solid #dfe2ea;border-radius:11px;padding:10px;background:#fff;font:inherit}.dayrow{border-top:1px solid var(--line);padding:14px 0}.dayrow:first-child{border-top:0}.daytitle{font-weight:850;margin-bottom:8px}.sources a{display:block;color:#3c4ed8;text-decoration:none;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}.sources a:last-child{border-bottom:0}.sourceNote{font-size:12px;color:var(--muted);margin-bottom:8px}.sticky{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));z-index:5}.stickyinner{max-width:760px;margin:auto;display:flex;gap:8px}.copymsg{font-size:12px;color:var(--ok);margin-top:6px;min-height:18px}
+@media(min-width:620px){.hero h1{font-size:32px}.card{padding:22px}.diarygrid{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="eyebrow">EVIDENCE-BASED SELF CHECK · 2026-10-01 검토</div>
+    <h1>많이 자는데도 피곤하다면?</h1>
+    <p>수면 시간만 보지 않고 <b>수면의 질, 주간 졸림, 철결핍/빈혈 단서, 갑상선, 혈당, 월경, 약물, 감염, 기분·스트레스</b>를 함께 확인합니다.</p>
+    <div class="badge">🔒 답변은 이 기기 안에서만 계산 · 서버 전송 없음</div>
+  </section>
+
+  <section id="intro" class="card">
+    <div class="notice"><strong>중요:</strong> 이 도구는 진단기가 아닙니다. 증상 조합으로 병의 확률을 만들어내지 않습니다. 최근 <b>2주</b>를 기준으로 답하고, 결과는 “어떤 원인을 먼저 확인할지”를 정리합니다. 성인용으로 설계했습니다.</div>
+    <div class="alert warn"><b>특히 지금처럼 “일찍 자고, 잠도 많이 자는데 계속 피곤함”이 반복된다면</b> 단순 수면시간 부족뿐 아니라 수면의 질이나 빈혈·갑상선·기타 원인을 확인할 가치가 있습니다.</div>
+    <button class="btn primary" style="width:100%" onclick="startCheck()">3–5분 체크 시작</button>
+  </section>
+
+  <section id="quiz" class="card hidden">
+    <div class="progress"><div id="bar" class="bar"></div></div>
+    <div class="stepmeta"><span id="sectionName"></span><span id="progressText"></span></div>
+    <div id="questionBox"></div>
+    <div class="nav"><button id="prevBtn" class="btn ghost" onclick="prevQ()">이전</button><button id="nextBtn" class="btn primary" onclick="nextQ()">다음</button></div>
+  </section>
+
+  <section id="results" class="hidden">
+    <div class="card">
+      <div class="resultHead"><div><div class="eyebrow">CHECK RESULT</div><h2>우선 확인할 영역</h2></div><div class="pill">진단 아님</div></div>
+      <div id="urgentBox"></div>
+      <div id="resultSummary"></div>
+      <div id="domains"></div>
+    </div>
+    <div class="card">
+      <div class="eyebrow">NEXT STEP</div><h2 style="font-size:21px;margin:5px 0 4px">지금부터 할 일</h2>
+      <div id="actions"></div>
+      <div class="alert ok"><b>추천:</b> 7일 동안 수면·낮 졸림·카페인·피로도를 기록하면 “시간은 충분한데 질이 나쁜지”, “주중/주말 차이가 큰지”를 진료 때 훨씬 정확히 설명할 수 있습니다.</div>
+    </div>
+    <div class="card">
+      <div class="eyebrow">FOR CLINIC</div><h2 style="font-size:21px;margin:5px 0 4px">병원에서 보여줄 요약</h2>
+      <div id="clinicText" class="notice"></div>
+      <div class="copymsg" id="copymsg"></div>
+    </div>
+  </section>
+
+  <section id="diary" class="card hidden">
+    <div class="eyebrow">7-DAY SLEEP DIARY</div><h2 style="font-size:21px;margin:5px 0 4px">7일 수면·피로 기록</h2>
+    <p class="notice">NHLBI 수면일지 개념을 간단히 모바일화했습니다. 취침/기상, 낮잠, 카페인, 아침 개운함, 낮 졸림을 기록하세요. 저장은 이 기기의 브라우저에만 됩니다.</p>
+    <div id="diaryRows"></div>
+    <button class="btn primary" style="width:100%" onclick="saveDiary()">기기에 저장</button><div class="copymsg" id="diarymsg"></div>
+  </section>
+
+  <section id="sources" class="card sources hidden">
+    <div class="eyebrow">SOURCES</div><h2 style="font-size:21px;margin:5px 0 4px">근거 및 출처</h2>
+    <div class="sourceNote">정부·전문학회·임상 리뷰를 우선 사용했습니다. 아래 링크는 원문으로 연결됩니다.</div>
+    <a href="https://www.aafp.org/pubs/afp/issues/2023/0700/fatigue-adults.html" target="_blank">AAFP (2023) — Fatigue in Adults: Evaluation and Management</a>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/25979105/" target="_blank">AASM/SRS — 성인 수면시간 합의문 (J Clin Sleep Med)</a>
+    <a href="https://www.nhlbi.nih.gov/health/sleep-apnea/symptoms" target="_blank">NHLBI — 수면무호흡 증상</a>
+    <a href="https://www.nhlbi.nih.gov/resources/sleep-diary" target="_blank">NHLBI — Sleep Diary</a>
+    <a href="https://www.nhlbi.nih.gov/health/anemia/iron-deficiency-anemia" target="_blank">NHLBI — 철결핍성 빈혈</a>
+    <a href="https://www.acog.org/womens-health/faqs/heavy-menstrual-bleeding" target="_blank">ACOG — 과다월경 기준 및 빈혈 관련성</a>
+    <a href="https://www.niddk.nih.gov/health-information/endocrine-diseases/hypothyroidism" target="_blank">NIDDK — 갑상선기능저하증 증상·진단</a>
+    <a href="https://www.niddk.nih.gov/health-information/diabetes/overview/symptoms-causes" target="_blank">NIDDK — 당뇨병 증상</a>
+    <a href="https://medlineplus.gov/ency/article/003088.htm" target="_blank">MedlinePlus — Fatigue</a>
+    <a href="https://www.mayoclinic.org/healthy-lifestyle/getting-pregnant/in-depth/home-pregnancy-tests/art-20047940" target="_blank">Mayo Clinic — 가정용 임신테스트 시점·한계</a>
+    <a href="https://www.129.go.kr/109" target="_blank">보건복지상담센터 — 24시간 자살예방상담전화 109</a>
+  </section>
+</div>
+
+<div id="sticky" class="sticky hidden"><div class="stickyinner"><button class="btn ghost" onclick="showPanel('results')">결과</button><button class="btn ghost" onclick="showPanel('diary')">7일 기록</button><button class="btn ghost" onclick="showPanel('sources')">근거</button><button class="btn primary" onclick="copyClinic()">진료요약 복사</button></div></div>
+
+<script>
+const Q=[
+{sec:'안전 확인',id:'age',type:'single',title:'검사 대상은 만 18세 이상인가요?',help:'이 도구는 성인 기준 자료로 설계했습니다.',opts:[['yes','예'],['no','아니요']]},
+{sec:'안전 확인',id:'red',type:'multi',title:'지금 아래 증상이 있나요?',help:'하나라도 해당하면 피로 원인 체크보다 즉시 안전 확인이 우선입니다.',opts:[['chest','새로 생긴 심한 가슴통증/압박감'],['breath','가만히 있어도 숨쉬기 매우 힘듦'],['faint','실신했거나 반복적으로 거의 쓰러질 것 같음'],['neuro','갑작스러운 한쪽 마비·말이 어눌함·심한 혼란'],['bleed','멈추지 않는 심한 출혈 또는 검은색/피가 섞인 변'],['selfharm','죽고 싶거나 자해할 생각이 있고 스스로 안전을 지키기 어려움'],['none','해당 없음']]},
+{sec:'피로 양상',id:'duration',type:'single',title:'이 피로가 얼마나 지속됐나요?',opts:[['lt1','1주 미만'],['1to4','1–4주'],['1to3m','1–3개월'],['3to6m','3–6개월'],['6m','6개월 이상']]},
+{sec:'피로 양상',id:'function',type:'single',title:'피로가 일상생활에 얼마나 영향을 주나요?',opts:[['0','거의 영향 없음'],['1','조금 불편하지만 생활 가능'],['2','업무·공부·약속을 자주 줄여야 함'],['3','일상 유지가 상당히 어려움']]},
+{sec:'피로 양상',id:'type',type:'single',title:'“피곤하다”는 느낌에 가장 가까운 것은?',help:'피로(fatigue)와 졸림(sleepiness)은 원인 접근이 달라질 수 있습니다.',opts:[['fatigue','졸리진 않은데 기운·에너지가 없음'],['sleepy','가만히 있으면 자꾸 졸거나 잠들 것 같음'],['both','둘 다 심함'],['unsure','잘 모르겠음']]},
+{sec:'수면',id:'hours',type:'single',title:'평균 실제 수면시간은?',help:'침대에 누워 있는 시간이 아니라 실제 잠든 시간 기준입니다.',opts:[['lt6','6시간 미만'],['6to7','6–7시간 미만'],['7to9','7–9시간'],['gt9','9시간 초과']]},
+{sec:'수면',id:'refresh',type:'freq',title:'충분히 잔 것 같은데도 아침에 개운하지 않나요?'},
+{sec:'수면',id:'wake',type:'freq',title:'밤중에 자주 깨거나, 깨면 다시 잠들기 어렵나요?'},
+{sec:'수면',id:'latency',type:'freq',title:'잠들기까지 30분 이상 걸리나요?'},
+{sec:'수면',id:'irregular',type:'freq',title:'자는 시각/일어나는 시각이 날마다 2시간 이상 흔들리나요?'},
+{sec:'수면호흡',id:'snore',type:'freq',title:'큰 코골이를 자주 하나요?',help:'본인이 모르면 함께 자는 사람에게 확인해도 좋습니다.'},
+{sec:'수면호흡',id:'gasp',type:'freq',title:'자는 동안 숨이 멎는 것 같거나 헐떡이며 숨을 쉬었다는 말을 들은 적이 있나요?'},
+{sec:'수면호흡',id:'dryhead',type:'freq',title:'아침에 입이 심하게 마르거나 두통이 있나요?'},
+{sec:'주간 졸림',id:'doze',type:'freq',title:'회의·대화·TV 시청처럼 가만히 있을 때 의도치 않게 졸아드나요?'},
+{sec:'주간 졸림',id:'drive',type:'freq',title:'운전 중 또는 신호대기 중 졸음 때문에 위험하다고 느낀 적이 있나요?'},
+{sec:'철결핍/월경',id:'heavy7',type:'single',title:'월경이 보통 7일을 넘기나요?',opts:[['yes','예'],['no','아니요'],['na','해당 없음/모름']]},
+{sec:'철결핍/월경',id:'heavypad',type:'single',title:'월경 때 몇 시간 연속으로 1시간마다 패드/탐폰을 흠뻑 적실 정도인가요?',opts:[['yes','예'],['no','아니요'],['na','해당 없음/모름']]},
+{sec:'철결핍/월경',id:'nightpad',type:'single',title:'월경 때문에 밤중에 교체하거나 이중 보호가 필요한 경우가 있나요?',opts:[['yes','예'],['no','아니요'],['na','해당 없음/모름']]},
+{sec:'철결핍/월경',id:'dizzy',type:'freq',title:'어지럼·현기증이 자주 있나요?'},
+{sec:'철결핍/월경',id:'exert',type:'freq',title:'예전보다 계단·걷기에서 숨이 차거나 심장이 빨리 뛰나요?'},
+{sec:'철결핍/월경',id:'pale',type:'freq',title:'주변에서 창백해 보인다는 말을 듣거나 본인이 유난히 창백하다고 느끼나요?'},
+{sec:'철결핍/월경',id:'ice',type:'freq',title:'얼음을 자꾸 씹고 싶거나 평소 먹지 않는 것을 먹고 싶은 충동이 있나요?'},
+{sec:'갑상선 단서',id:'cold',type:'freq',title:'다른 사람보다 추위를 유난히 많이 타나요?'},
+{sec:'갑상선 단서',id:'constip',type:'freq',title:'최근 변비가 늘었나요?'},
+{sec:'갑상선 단서',id:'skin',type:'freq',title:'피부가 매우 건조해지거나 머리카락이 가늘어지고 빠지는 변화가 있나요?'},
+{sec:'갑상선 단서',id:'weightgain',type:'freq',title:'생활 변화로 설명하기 어려운 체중 증가가 있나요?'},
+{sec:'대사/혈당',id:'thirst',type:'freq',title:'평소보다 유난히 목이 마르나요?'},
+{sec:'대사/혈당',id:'urine',type:'freq',title:'소변을 보는 횟수가 눈에 띄게 늘었나요?'},
+{sec:'대사/혈당',id:'weightloss',type:'freq',title:'일부러 뺀 것이 아닌데 체중이 줄었나요?'},
+{sec:'대사/혈당',id:'blur',type:'freq',title:'시야가 흐려지는 일이 있나요?'},
+{sec:'약물·생활',id:'meds',type:'freq',title:'최근 새로 시작하거나 용량이 바뀐 약/건강기능식품이 있나요?',help:'특히 일부 항히스타민제·수면제 등은 졸림/피로와 관련될 수 있습니다.'},
+{sec:'약물·생활',id:'caffeine',type:'freq',title:'오후 늦게 또는 저녁에 커피·에너지음료·카페인을 마시나요?'},
+{sec:'약물·생활',id:'alcohol',type:'freq',title:'잠들기 전 술을 마시는 날이 있나요?'},
+{sec:'약물·생활',id:'meal',type:'freq',title:'식사를 자주 거르거나 최근 식사량이 크게 줄었나요?'},
+{sec:'감염·전신',id:'infection',type:'freq',title:'피로가 시작되기 전후로 감기·독감·코로나 같은 감염을 앓았나요?'},
+{sec:'감염·전신',id:'fever',type:'freq',title:'지속되는 발열·야간 발한(옷이 젖을 정도)·오래 가는 기침 중 하나가 있나요?'},
+{sec:'기분·스트레스',id:'lowmood',type:'freq',title:'최근 기분이 가라앉거나 우울한 날이 많았나요?'},
+{sec:'기분·스트레스',id:'interest',type:'freq',title:'평소 좋아하던 일에 흥미나 즐거움이 뚜렷하게 줄었나요?'},
+{sec:'기분·스트레스',id:'stress',type:'freq',title:'걱정·긴장·업무/학업 스트레스 때문에 쉬어도 머리가 계속 긴장돼 있나요?'},
+{sec:'임신 가능성',id:'preg',type:'single',title:'예정된 월경이 늦었거나 임신 가능성이 있나요?',opts:[['yes','예'],['no','아니요'],['na','해당 없음/모름']]},
+{sec:'장기 피로',id:'pem',type:'freq',title:'가벼운 활동 뒤에도 증상이 몇 시간~다음 날 더 악화되고 회복에 오래 걸리나요?',help:'6개월 이상 지속되는 경우에는 진료 때 “활동 후 악화” 여부를 꼭 설명하는 것이 중요합니다.'},
+{sec:'장기 피로',id:'brain',type:'freq',title:'집중력·기억력이 예전보다 뚜렷하게 떨어졌다고 느끼나요?'}
+];
+const FREQ=[['0','전혀/거의 없음'],['1','가끔'],['2','자주'],['3','거의 매일']];
+let idx=0, A={};
+function startCheck(){document.getElementById('intro').classList.add('hidden');document.getElementById('quiz').classList.remove('hidden');renderQ();scrollTo(0,0)}
+function renderQ(){let q=Q[idx];document.getElementById('sectionName').textContent=q.sec;document.getElementById('progressText').textContent=`${idx+1} / ${Q.length}`;document.getElementById('bar').style.width=((idx+1)/Q.length*100)+'%';let h=`<div class="qtitle">${q.title}</div>${q.help?`<div class="qhelp">${q.help}</div>`:''}`;if(q.type==='multi'){h+='<div class="opts">'+q.opts.map(o=>`<label class="checkrow"><input type="checkbox" value="${o[0]}" ${(A[q.id]||[]).includes(o[0])?'checked':''} onchange="multiChange('${q.id}',this)"><span>${o[1]}</span></label>`).join('')+'</div>'}else{let opts=q.type==='freq'?FREQ:q.opts;h+='<div class="opts">'+opts.map(o=>`<button class="opt ${A[q.id]===o[0]?'sel':''}" onclick="pick('${q.id}','${o[0]}')">${o[1]}</button>`).join('')+'</div>'}document.getElementById('questionBox').innerHTML=h;document.getElementById('prevBtn').disabled=idx===0;document.getElementById('nextBtn').textContent=idx===Q.length-1?'결과 보기':'다음';updateNext()}
+function pick(id,v){A[id]=v;renderQ()}
+function multiChange(id,el){let arr=A[id]||[];if(el.checked){if(el.value==='none')arr=['none'];else{arr=arr.filter(x=>x!=='none');if(!arr.includes(el.value))arr.push(el.value)}}else arr=arr.filter(x=>x!==el.value);A[id]=arr;renderQ()}
+function answered(q){if(q.type==='multi')return Array.isArray(A[q.id])&&A[q.id].length>0;return A[q.id]!==undefined}
+function updateNext(){document.getElementById('nextBtn').disabled=!answered(Q[idx])}
+function nextQ(){if(!answered(Q[idx]))return;if(idx<Q.length-1){idx++;renderQ();scrollTo(0,0)}else finish()}
+function prevQ(){if(idx>0){idx--;renderQ();scrollTo(0,0)}}
+const n=id=>+(A[id]||0), yes=id=>A[id]==='yes';
+function level(score,max){let r=max?score/max:0;if(r>=.55)return 2;if(r>=.25)return 1;return 0}
+function finish(){localStorage.setItem('fatigueAnswersV2',JSON.stringify(A));document.getElementById('quiz').classList.add('hidden');document.getElementById('results').classList.remove('hidden');document.getElementById('sticky').classList.remove('hidden');buildResults();scrollTo(0,0)}
+function buildResults(){
+ let red=(A.red||[]).filter(x=>x!=='none');let ub=document.getElementById('urgentBox');
+ if(red.length){let mental=red.includes('selfharm');ub.innerHTML=`<div class="alert danger"><b>⚠️ 먼저 즉시 확인이 필요한 신호가 선택됐습니다.</b><br>${mental?'자해/자살 위험이 있다면 혼자 있지 말고 대한민국 자살예방상담전화 109 또는 즉각적인 위험이면 119·112에 연락하세요. ':''}심한 흉통·호흡곤란·실신·갑작스러운 신경학적 증상·심한 출혈은 온라인 체크보다 응급평가가 우선입니다.</div>`} else ub.innerHTML='';
+ if(A.age==='no')ub.innerHTML+=`<div class="alert warn"><b>성인용 기준:</b> 만 18세 미만이라면 이 결과를 그대로 적용하지 말고 보호자와 소아청소년과/의료진에게 상담하세요.</div>`;
+ let sleepScore=(A.hours==='lt6'?3:A.hours==='6to7'?2:0)+n('refresh')+n('wake')+n('latency')+n('irregular');
+ let apneaScore=n('snore')+n('gasp')+n('dryhead')+n('doze');
+ let ironScore=(yes('heavy7')?2:0)+(yes('heavypad')?3:0)+(yes('nightpad')?2:0)+n('dizzy')+n('exert')+n('pale')+n('ice');
+ let thyroidScore=n('cold')+n('constip')+n('skin')+n('weightgain')+(yes('heavy7')?1:0);
+ let glucoseScore=n('thirst')+n('urine')+n('weightloss')+n('blur');
+ let lifeScore=n('meds')+n('caffeine')+n('alcohol')+n('meal');
+ let moodScore=n('lowmood')+n('interest')+n('stress');
+ let systemicScore=n('infection')+n('fever')+(A.duration==='6m'?n('pem')+n('brain'):0);
+ let domains=[
+  {name:'수면의 양·질',score:sleepScore,max:15,why:sleepWhy(),action:'수면시간뿐 아니라 중간각성·입면시간·규칙성까지 7일간 기록하세요.'},
+  {name:'수면호흡/과도한 졸림',score:apneaScore,max:12,why:apneaWhy(),action:'코골이·호흡정지 목격·주간 졸림이 함께 있으면 수면클리닉 또는 1차진료에서 수면검사 필요성을 상담하세요.'},
+  {name:'철결핍·빈혈/월경',score:ironScore,max:19,why:ironWhy(),action:'월경과다나 어지럼·숨참·창백 단서가 모이면 CBC(혈구검사)와 ferritin(저장철)을 의료진과 상담하는 것이 합리적입니다.'},
+  {name:'갑상선 단서',score:thyroidScore,max:13,why:thyroidWhy(),action:'피로와 추위 민감·변비·피부/모발·체중 변화가 함께 있으면 TSH를 중심으로 갑상선 혈액검사를 의료진과 상담하세요.'},
+  {name:'혈당/대사 단서',score:glucoseScore,max:12,why:glucoseWhy(),action:'심한 갈증·잦은 소변·설명 안 되는 체중 감소 등이 함께 있으면 혈당검사를 상담하세요.'},
+  {name:'약물·생활 요인',score:lifeScore,max:12,why:lifeWhy(),action:'새 약 시작 시점, 카페인 시간, 술, 식사 패턴과 피로 시작 시점을 비교하세요. 처방약은 임의로 중단하지 마세요.'},
+  {name:'기분·스트레스',score:moodScore,max:9,why:moodWhy(),action:'기분 저하나 흥미 감소가 지속되면 피로의 중요한 동반 요인이 될 수 있어 의료진/상담 전문가와 함께 평가할 가치가 있습니다.'},
+  {name:'감염·장기 피로 단서',score:systemicScore,max:12,why:systemicWhy(),action:'감염 이후 지속 피로, 발열·야간발한·기침, 또는 6개월 이상 활동 후 악화가 있으면 진료에서 반드시 구체적으로 설명하세요.'}
+ ];
+ domains.forEach(d=>d.lv=level(d.score,d.max));domains.sort((a,b)=>b.lv-a.lv||(b.score/b.max)-(a.score/a.max));
+ let summary=[];
+ if(A.hours==='7to9'||A.hours==='gt9')summary.push('수면시간 자체는 짧지 않은 편으로 답했습니다. 따라서 “더 오래 자기”만으로 해결되지 않는 원인도 함께 확인하는 편이 좋습니다.');
+ if(A.hours==='gt9')summary.push('9시간 초과 수면만으로 이상이라고 판단할 수는 없습니다. 젊은 성인, 수면부채 회복, 질병 중에는 더 오래 잘 수 있습니다. 다만 오래 자도 계속 피곤하면 평가가 필요할 수 있습니다.');
+ if(n('drive')>=2)summary.push('운전 중 졸림이 반복된다면 원인을 확인하기 전까지 졸릴 때 운전하지 않는 것이 안전합니다.');
+ if(A.duration==='6m'&&n('pem')>=2&&n('refresh')>=2&&(n('brain')>=2||n('dizzy')>=2))summary.push('6개월 이상 피로 + 활동 후 악화 + 비회복성 수면 등의 조합이 있습니다. 이는 ME/CFS를 진단한다는 뜻이 아니며, 진료 시 이 패턴을 구체적으로 설명해야 합니다.');
+ document.getElementById('resultSummary').innerHTML=`<div class="alert ${red.length?'danger':'ok'}">${summary.length?summary.map(x=>'• '+x).join('<br>'):'응답에서 즉시 응급 신호는 선택되지 않았습니다. 아래는 원인 확률이 아니라 “어디에 단서가 모였는지”입니다.'}</div>`;
+ document.getElementById('domains').innerHTML=domains.slice(0,6).map(d=>domainHTML(d)).join('');
+ document.getElementById('actions').innerHTML=buildActions(domains);
+ document.getElementById('clinicText').innerHTML=clinicSummary(domains).replace(/\n/g,'<br>');
+ }
+function labelLv(lv){return lv===2?['단서 많음','lv2']:lv===1?['일부 단서','lv1']:['단서 적음','lv0']}
+function domainHTML(d){let [t,c]=labelLv(d.lv);return `<div class="domain"><div class="domainTop"><h3>${d.name}</h3><span class="level ${c}">${t}</span></div><div class="why">${d.why}</div><div class="action"><b>다음:</b> ${d.action}</div></div>`}
+function sleepWhy(){let a=[];if(A.hours==='lt6'||A.hours==='6to7')a.push('실제 수면시간이 7시간 미만');if(n('refresh')>=2)a.push('충분히 자도 개운하지 않음');if(n('wake')>=2)a.push('야간 각성');if(n('latency')>=2)a.push('입면 지연');if(n('irregular')>=2)a.push('수면시각 불규칙');return a.length?a.join(' · '):'뚜렷한 수면양/질 단서는 적었습니다.'}
+function apneaWhy(){let a=[];if(n('snore')>=2)a.push('잦은 큰 코골이');if(n('gasp')>=1)a.push('호흡정지/헐떡임 목격');if(n('dryhead')>=2)a.push('아침 입마름/두통');if(n('doze')>=2)a.push('의도치 않은 주간 졸림');return a.length?a.join(' · '):'수면호흡 관련 대표 단서는 적었습니다.'}
+function ironWhy(){let a=[];if(yes('heavy7')||yes('heavypad')||yes('nightpad'))a.push('과다월경 단서');if(n('dizzy')>=2)a.push('어지럼');if(n('exert')>=2)a.push('활동 시 숨참/두근거림');if(n('pale')>=2)a.push('창백함');if(n('ice')>=2)a.push('얼음/비정상적 섭취 욕구');return a.length?a.join(' · '):'철결핍/빈혈을 강하게 시사하는 단서는 적었습니다.'}
+function thyroidWhy(){let a=[];if(n('cold')>=2)a.push('추위 민감');if(n('constip')>=2)a.push('변비');if(n('skin')>=2)a.push('피부/모발 변화');if(n('weightgain')>=2)a.push('설명 어려운 체중 증가');return a.length?a.join(' · '):'갑상선기능저하와 함께 볼 수 있는 동반 단서는 적었습니다.'}
+function glucoseWhy(){let a=[];if(n('thirst')>=2)a.push('심한 갈증');if(n('urine')>=2)a.push('잦은 소변');if(n('weightloss')>=2)a.push('설명 안 되는 체중 감소');if(n('blur')>=2)a.push('흐린 시야');return a.length?a.join(' · '):'혈당 이상에서 볼 수 있는 대표 단서는 적었습니다.'}
+function lifeWhy(){let a=[];if(n('meds')>=1)a.push('최근 약/보충제 변화');if(n('caffeine')>=2)a.push('늦은 카페인');if(n('alcohol')>=2)a.push('취침 전 음주');if(n('meal')>=2)a.push('불규칙/부족한 식사');return a.length?a.join(' · '):'생활/약물 관련 단서는 적었습니다.'}
+function moodWhy(){let a=[];if(n('lowmood')>=2)a.push('기분 저하');if(n('interest')>=2)a.push('흥미 감소');if(n('stress')>=2)a.push('지속 스트레스/긴장');return a.length?a.join(' · '):'기분·스트레스 관련 단서는 적었습니다.'}
+function systemicWhy(){let a=[];if(n('infection')>=2)a.push('감염 전후 시작');if(n('fever')>=1)a.push('발열/야간발한/지속 기침');if(A.duration==='6m'&&n('pem')>=2)a.push('6개월 이상 + 활동 후 악화');if(n('brain')>=2)a.push('집중/기억 저하');return a.length?a.join(' · '):'감염/장기피로 관련 단서는 적었습니다.'}
+function buildActions(domains){let html='';
+ html+=`<div class="recommend"><b>1) 7일 수면·피로 기록</b><span class="small">취침/기상·낮잠·카페인·아침 개운함·낮 졸림을 기록하세요. NHLBI도 수면 문제 평가 전에 1–2주 수면일지를 권합니다.</span></div>`;
+ if((A.hours==='7to9'||A.hours==='gt9')&&n('refresh')>=2)html+=`<div class="recommend"><b>2) “더 오래 자기”보다 수면의 질 확인</b><span class="small">이미 충분한 시간을 자는데 개운하지 않다면 단순 수면시간 부족만으로 설명되지 않을 수 있습니다.</span></div>`;
+ if(n('snore')>=2||n('gasp')>=1||n('doze')>=2)html+=`<div class="recommend"><b>수면호흡 평가 상담</b><span class="small">코골이·호흡정지/헐떡임·주간 졸림이 있으면 수면검사가 필요한지 진료에서 확인하세요.</span></div>`;
+ if(yes('heavy7')||yes('heavypad')||yes('nightpad')||n('dizzy')>=2||n('exert')>=2)html+=`<div class="recommend"><b>CBC + ferritin 상담</b><span class="small">특히 월경량이 많다면 저장철이 떨어질 수 있어 혈구검사(CBC)와 ferritin을 의료진과 상의할 근거가 있습니다.</span></div>`;
+ if(n('cold')+n('constip')+n('skin')+n('weightgain')>=6)html+=`<div class="recommend"><b>갑상선 혈액검사 상담</b><span class="small">TSH를 중심으로, 필요 시 의료진이 추가 검사를 결정합니다. 증상만으로 갑상선기능저하를 진단할 수는 없습니다.</span></div>`;
+ if((n('thirst')>=2&&n('urine')>=2)||n('weightloss')>=2)html+=`<div class="recommend"><b>혈당검사 상담</b><span class="small">갈증·잦은 소변·설명 안 되는 체중감소가 함께 있으면 혈당검사 여부를 확인하세요.</span></div>`;
+ if(A.preg==='yes')html+=`<div class="recommend"><b>임신 가능성 확인</b><span class="small">예정 월경이 지났다면 가정용 임신테스트를 사용할 수 있습니다. 너무 이른 검사는 음성으로 나올 수 있어 제품 설명을 따르세요.</span></div>`;
+ if(A.function==='2'||A.function==='3'||['1to3m','3to6m','6m'].includes(A.duration))html+=`<div class="recommend"><b>지속·기능저하가 있으면 진료</b><span class="small">충분히 자고 생활습관을 조정해도 피로가 계속되거나 일상을 줄여야 할 정도라면 가정의학과/내과에서 병력과 진찰을 바탕으로 원인을 좁히는 편이 좋습니다.</span></div>`;
+ html+=`<div class="recommend"><b>검사를 한꺼번에 다 할 필요는 없음</b><span class="small">피로는 원인이 넓어 무조건적인 광범위 검사는 효율이 낮습니다. 증상·월경·수면·약물 단서에 맞춰 검사를 선택하는 것이 원칙입니다.</span></div>`;
+ return html}
+function clinicSummary(domains){let top=domains.filter(d=>d.lv>0).slice(0,4).map(d=>d.name+'('+labelLv(d.lv)[0]+')').join(', ')||'뚜렷하게 몰린 영역 없음';let hrs={lt6:'6시간 미만','6to7':'6–7시간 미만','7to9':'7–9시간',gt9:'9시간 초과'}[A.hours]||'-';let dur={lt1:'1주 미만','1to4':'1–4주','1to3m':'1–3개월','3to6m':'3–6개월','6m':'6개월 이상'}[A.duration]||'-';let lines=[`피로 지속기간: ${dur}`,`평균 실제 수면시간: ${hrs}`,`피로/졸림 형태: ${A.type==='fatigue'?'기운 없음 중심':A.type==='sleepy'?'졸림 중심':A.type==='both'?'둘 다':'불명확'}`,`일상 영향: ${A.function}/3`,`단서가 모인 영역: ${top}`];if(yes('heavy7')||yes('heavypad')||yes('nightpad'))lines.push('월경과다 단서: 있음');if(n('snore')>=2||n('gasp')>=1)lines.push('코골이/수면 중 호흡 이상 단서: 있음');if(A.preg==='yes')lines.push('월경 지연/임신 가능성: 있음');if(n('meds')>=1)lines.push('최근 약/보충제 변화: 있음');if(A.duration==='6m'&&n('pem')>=2)lines.push('6개월 이상 + 활동 후 증상 악화: 있음');lines.push('요청: 피로 원인 평가 시 수면/월경/약물 병력과 필요에 따른 CBC·ferritin, TSH, 혈당, 임신검사, 수면평가 여부 상담');return lines.join('\n')}
+function showPanel(id){['results','diary','sources'].forEach(x=>document.getElementById(x).classList.toggle('hidden',x!==id));if(id==='diary')renderDiary();scrollTo(0,0)}
+function copyClinic(){let txt=document.getElementById('clinicText').innerText;navigator.clipboard?.writeText(txt).then(()=>document.getElementById('copymsg').textContent='복사했습니다. 병원 접수/진료 때 붙여넣어 보여주세요.').catch(()=>{})}
+function renderDiary(){let saved=JSON.parse(localStorage.getItem('fatigueDiaryV2')||'{}');let h='';for(let i=1;i<=7;i++){let d=saved[i]||{};h+=`<div class="dayrow"><div class="daytitle">Day ${i}</div><div class="diarygrid"><div class="field"><label>잠든 시각</label><input id="d${i}s" type="time" value="${d.s||''}"></div><div class="field"><label>일어난 시각</label><input id="d${i}w" type="time" value="${d.w||''}"></div><div class="field"><label>낮잠(분)</label><input id="d${i}n" type="number" min="0" max="600" value="${d.n||''}"></div><div class="field"><label>마지막 카페인</label><input id="d${i}c" type="time" value="${d.c||''}"></div><div class="field"><label>아침 개운함 0–10</label><input id="d${i}r" type="number" min="0" max="10" value="${d.r||''}"></div><div class="field"><label>낮 졸림 0–10</label><input id="d${i}z" type="number" min="0" max="10" value="${d.z||''}"></div><div class="field"><label>저녁 피로 0–10</label><input id="d${i}f" type="number" min="0" max="10" value="${d.f||''}"></div><div class="field"><label>메모</label><input id="d${i}m" value="${d.m||''}" placeholder="코골이/음주/운동 등"></div></div></div>`}document.getElementById('diaryRows').innerHTML=h}
+function saveDiary(){let o={};for(let i=1;i<=7;i++){o[i]={s:v(`d${i}s`),w:v(`d${i}w`),n:v(`d${i}n`),c:v(`d${i}c`),r:v(`d${i}r`),z:v(`d${i}z`),f:v(`d${i}f`),m:v(`d${i}m`)}}localStorage.setItem('fatigueDiaryV2',JSON.stringify(o));document.getElementById('diarymsg').textContent='저장했습니다. 이 브라우저 기기에만 저장됩니다.'}
+function v(id){return document.getElementById(id)?.value||''}
+window.addEventListener('load',()=>{try{let x=JSON.parse(localStorage.getItem('fatigueAnswersV2')||'null');if(x&&Object.keys(x).length){A=x}}catch(e){}})
+</script>
+</body>
+</html>
